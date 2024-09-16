@@ -1,0 +1,19 @@
+{
+  "name": "mini-project-1",
+  "version": "1.0.0",
+  "description": "blog application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Izaac Molina",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "bootstrap": "^5.3.3",
+    "ejs": "^3.1.10",
+    "express": "^4.20.0",
+    "nodemon": "^3.1.4"
+  }
+}
