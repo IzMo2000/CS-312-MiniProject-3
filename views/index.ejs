@@ -11,27 +11,32 @@
         <div class="container mt-5">
             <h1 class="text-center mb-4">Blog Site</h1>
 
+            <form action="/logout" method="POST">
+                <button type="submit" class="btn btn-primary btn-sm">Log Out</button>
+            </form>
+            <br>
             <% if (locals.posts.length) { %>
                 <% posts.forEach((post) => { %>
                     <div class="mb-4">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title"><%= post.title %></h5>
-                                <h6 class="card-subtitle mb-2 text-muted">By <%= post.author %></h6>
+                                <h6 class="card-subtitle mb-2 text-muted">By <%= post.creator_name %></h6>
                                 <p class="text-muted">
                                     Last updated at <%= post.dateTime.getHours() %>:<%= String(post.dateTime.getMinutes()).padStart(2, '0') %> 
                                     on <%= post.dateTime.getMonth() + 1 %>/<%= post.dateTime.getDate() %>/<%= post.dateTime.getFullYear() %>
                                 </p>
-                                <p class="card-text"><%= post.content %></p>
-
-                                <form action="/delete_post" method="POST" class="d-inline">
-                                    <input type="hidden" name="id" value="<%= post.id %>">
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete Post</button>
-                                </form>
-                                <form action="/edit" method="GET" class="d-inline">
-                                    <input type="hidden" name="id" value="<%= post.id %>">
-                                    <button type="submit" class="btn btn-secondary btn-sm">Edit Post</button>
-                                </form>
+                                <p class="card-text"><%= post.body %></p>
+                                <% if (locals.userId === post.creator_user_id) { %>
+                                    <form action="/delete_post" method="POST" class="d-inline">
+                                        <input type="hidden" name="blog_id" value="<%= post.blog_id %>">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete Post</button>
+                                    </form>
+                                    <form action="/edit" method="GET" class="d-inline">
+                                        <input type="hidden" name="blog_id" value="<%= post.blog_id %>">
+                                        <button type="submit" class="btn btn-secondary btn-sm">Edit Post</button>
+                                    </form>
+                                <% } %>
                             </div>
                         </div>
                     </div>
@@ -46,10 +51,7 @@
                     <input type="text" class="form-control mb-3" name="title" placeholder="Title" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control mb-3" name="author" placeholder="Author Name" required>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control mb-3" name="content" placeholder="Write your post here" rows="5" required></textarea>
+                    <textarea class="form-control mb-3" name="body" placeholder="Write your post here" rows="5" required></textarea>
                 </div>
                 <button type="submit" class="btn-primary btn">Post</button>
             </form>
